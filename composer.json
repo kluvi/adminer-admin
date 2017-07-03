@@ -1,0 +1,19 @@
+{
+  "name": "kluvi/adminer-admin",
+    "description": "Ultimative administration powered by Adminer Editor with bindings to Laravel",
+    "license": "WTFPL",
+    "authors": [
+        {
+            "name": "Jakub Kluvánek",
+            "email": "kluvanek@gmail.com"
+        }
+    ],
+  "autoload": {
+    "classmap": [
+      "src"
+    ],
+    "psr-4": {
+      "kluvi\\": "src/kluvi/"
+    }
+  }
+}
