@@ -21,7 +21,7 @@ class FieldImage extends AbstractAdminPlugin
     function processInput($field, $value, $function = "")
     {
         $settings = $this->parseComment($field['comment']);
-        if ($settings->type == 'image') {
+        if ($settings->type == 'image' && isset($_GET['where'])) {
             $id = reset($_GET['where']);
             $tableName = $_GET['edit'];
             $fieldName = $field['field'];
