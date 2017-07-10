@@ -16,4 +16,4 @@ $pluginsConfig = [
         'baseUrl' => 'http://localhost/adminer-admin-test/images/',
     ],
 ];
-\kluvi\AdminerAdmin\Base\AdminerFactory::require ($targetDir . '/adminer.php', $database = 'test-adminer-admin', $host = 'localhost', $username = 'root', $password = '', $pluginsConfig);
+\kluvi\AdminerAdmin\Base\AdminerFactory::run($targetDir . '/adminer.php', $database = 'test-adminer-admin', $host = 'localhost', $username = 'root', $password = '', $pluginsConfig);

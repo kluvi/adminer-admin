@@ -10,6 +10,6 @@ class Controller extends BaseController
         $adminerPath = config('adminer-admin.adminer_download_dir') . '/adminer.php';
         $pluginsConfig = config('adminer-admin.plugins_config');
 
-        AdminerFactory::require ($adminerPath, env('DB_DATABASE'), env('DB_HOST'), env('DB_USERNAME'), env('DB_PASSWORD'), $pluginsConfig);
+        AdminerFactory::run($adminerPath, env('DB_DATABASE'), env('DB_HOST'), env('DB_USERNAME'), env('DB_PASSWORD'), $pluginsConfig);
     }
 }

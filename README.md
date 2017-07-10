@@ -56,7 +56,7 @@ Example database is placed in `examples/dump.sql`. There is also `index.php` whi
 ## How to use Adminer Admin without Laravel?
 
 - look at Downloader->download() - this part is responsible for downloading and editing of Adminer Editor (there should be done some replacements) - you should somehow run it. The parameters are taken from `config/adminer-admin.php`
-- use `AdminerFactory::require()` in your controllers to run Adminer Admin.
+- use `AdminerFactory::run()` in your controllers to run Adminer Admin.
 - now Adminer Admin should work - if not, please make an issue
 
 ```php
@@ -78,7 +78,7 @@ $pluginsConfig = [
         'baseUrl' => 'http://localhost/images/',
     ],
 ];
-\kluvi\AdminerAdmin\Base\AdminerFactory::require($targetDir.'/adminer.php', $database = 'test', $host = 'localhost', $username = 'root', $password = '', $pluginsConfig);
+\kluvi\AdminerAdmin\Base\AdminerFactory::run($targetDir.'/adminer.php', $database = 'test', $host = 'localhost', $username = 'root', $password = '', $pluginsConfig);
 ```
 
 ## Contribution

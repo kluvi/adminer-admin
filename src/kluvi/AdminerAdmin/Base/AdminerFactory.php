@@ -55,7 +55,7 @@ class AdminerFactory
      * @param $pluginsConfig array ['field_image' => 'baseDir' => '', 'baseUrl' => '']
      * @throws AdminException
      */
-    public static function require($adminerPath, $database, $host, $username, $password, $pluginsConfig)
+    public static function run($adminerPath, $database, $host, $username, $password, $pluginsConfig)
     {
         self::$config = [
             'database' => $database,
