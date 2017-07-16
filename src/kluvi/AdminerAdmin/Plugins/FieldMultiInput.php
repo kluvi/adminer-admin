@@ -56,7 +56,8 @@ class FieldMultiInput extends AbstractAdminPlugin
                         });
 
                         $(document).on('click', 'button.addMultiInput', function () {
-                            $(this).prev().append('<li class="input"><span class="handle">&#9776;</span><input name="fields[labels][]"><button>odstranit</button></li>');
+                            fieldName = $(this).attr('data-field');
+                            $(this).prev().append('<li class="input"><span class="handle">&#9776;</span><input name="fields[' + fieldName + '][]"><button>remove</button></li>');
                             $('.inputs').sortable('destroy').sortable({
                                 handle: '.handle'
                             });
@@ -89,17 +90,17 @@ class FieldMultiInput extends AbstractAdminPlugin
                     $return .= '<li class="input">';
                     $return .= '<span class="handle">&#9776;</span>';
                     $return .= '<input name="fields[' . $field['field'] . '][]" value="' . $input . '" />';
-                    $return .= '<button>odstranit</button>';
+                    $return .= '<button>remove</button>';
                     $return .= '</li>';
                 }
             }
             $return .= '<li class="input">';
             $return .= '<span class="handle">&#9776;</span>';
             $return .= '<input name="fields[' . $field['field'] . '][]" />';
-            $return .= '<button>odstranit</button>';
+            $return .= '<button>remove</button>';
             $return .= '</li>';
             $return .= '</ul>';
-            $return .= '<button class="addMultiInput">přidat</button>';
+            $return .= '<button class="addMultiInput" data-field="' . $field['field'] . '">add</button>';
             return $return;
         }
     }
