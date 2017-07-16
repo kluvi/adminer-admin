@@ -14,7 +14,7 @@ return [
     /**
      * URL from which is Adminer Editor downloaded
      */
-    'adminer_download_url' => 'https://github.com/vrana/adminer/releases/download/v4.3.1/editor-4.3.1-mysql.php',
+    'adminer_download_url' => 'http://www.adminer.org/latest-editor.php',
 
     /**
      * configuration of plugins
