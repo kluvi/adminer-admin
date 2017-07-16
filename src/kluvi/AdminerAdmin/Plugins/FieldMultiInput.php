@@ -78,7 +78,7 @@ class FieldMultiInput extends AbstractAdminPlugin
                     }
                 </style>
                 <?php
-                $this->scriptsPrinted;
+                $this->scriptsPrinted = true;
             }
             $return = '';
             $return .= '<ul class="inputs">';
