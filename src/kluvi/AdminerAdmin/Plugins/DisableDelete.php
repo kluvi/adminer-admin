@@ -16,6 +16,5 @@ class DisableDelete extends AbstractAdminPlugin
                 }
             }
         }
-        return true;
     }
 }

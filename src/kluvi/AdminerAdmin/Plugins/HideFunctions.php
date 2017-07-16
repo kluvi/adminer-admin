@@ -15,7 +15,6 @@ class HideFunctions extends AbstractAdminPlugin
             }
         </style>
         <?php
-        return true;
     }
 
     /** Returns export output options
