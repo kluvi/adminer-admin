@@ -6,6 +6,7 @@ namespace kluvi\AdminerAdmin\Base;
 use kluvi\AdminerAdmin\Base\Exceptions\AdminException;
 use kluvi\AdminerAdmin\Plugins\DisableDelete;
 use kluvi\AdminerAdmin\Plugins\DisableNew;
+use kluvi\AdminerAdmin\Plugins\FieldRichEditor;
 use kluvi\AdminerAdmin\Plugins\FieldEnumSelect;
 use kluvi\AdminerAdmin\Plugins\FieldFile;
 use kluvi\AdminerAdmin\Plugins\FieldForeignKeySelect;
@@ -26,6 +27,7 @@ class AdminerFactory
         $plugins = [
             // fieds must be registered first, because TranslateFields overrides fieldName() and field then cant disable self
             FieldMultiInput::class,
+            FieldRichEditor::class,
             FieldPassword::class,
             [FieldFile::class, self::$config['plugins']['field_image']],
             FieldReadonly::class,
