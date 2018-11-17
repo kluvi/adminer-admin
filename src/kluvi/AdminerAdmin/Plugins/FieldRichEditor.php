@@ -11,7 +11,7 @@ class FieldRichEditor extends AbstractAdminPlugin
     {
         $settings = $this->parseComment($field['comment']);
 
-        if ($settings->type == 'rich') {
+        if ($settings->type == 'rich' || $this->getFromType($settings, $table) == 'rich') {
             if (!$this->scriptsPrinted) {
                 ?>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
