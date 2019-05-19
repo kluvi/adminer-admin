@@ -10,7 +10,8 @@ class HideFunctions extends AbstractAdminPlugin
         <style>
             #table thead tr:first-child td:first-child a,
             #table [type=checkbox],
-            p.count label {
+            p.count label,
+            input[name="insert"] {
                 display: none;
             }
         </style>
