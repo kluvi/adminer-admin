@@ -81,7 +81,7 @@ class FieldRichEditor extends AbstractAdminPlugin
                 });
             </script>
             <?php
-            $return = '<textarea name="fields[' . $field['field'] . ']" class="rich" id="rich_' . $field['field'] . '" style="min-height: 400px">' . $value . '</textarea>';
+            $return = '<textarea name="fields[' . $field['field'] . ']" class="rich-ckeditor" id="rich_' . $field['field'] . '" style="min-height: 400px">' . $value . '</textarea>';
             return $return;
         }
     }
