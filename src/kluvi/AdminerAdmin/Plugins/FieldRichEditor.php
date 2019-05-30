@@ -6,6 +6,7 @@ namespace kluvi\AdminerAdmin\Plugins;
 class FieldRichEditor extends AbstractAdminPlugin
 {
     protected $scriptsPrinted = false;
+    protected $scriptsPrintedCkeditor = false;
 
     function editInput($table, $field, $attrs, $value)
     {
@@ -40,6 +41,47 @@ class FieldRichEditor extends AbstractAdminPlugin
                 $this->scriptsPrinted = true;
             }
             $return = '<textarea name="fields[' . $field['field'] . ']" class="rich">' . $value . '</textarea>';
+            return $return;
+        }
+
+        if ($settings->type == 'ckeditor' || $this->getFromType($settings, $table) == 'ckeditor') {
+            if (!$this->scriptsPrinted) {
+                echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>';
+                echo '<script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/classic/ckeditor.js"></script>';
+                echo '<script src="' . asset('ckfinder/ckfinder.js') . '"></script>';
+                $this->scriptsPrinted = true;
+            }
+            ?>
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('textarea.rich').closest('td').css({background: 'white'});
+                    ClassicEditor
+                        .create(document.querySelector('#rich_<?php echo $field['field']; ?>'), {
+                            ckfinder: {
+                                uploadUrl: 'ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
+                            },
+                            toolbar: [
+                                'heading', '|',
+                                'bold', 'italic', 'blockquote', '|',
+                                'ckfinder', 'link', /*'mediaembed',*/ '|',
+                                'numberedlist', 'bulletedlist', '|',
+                                'inserttable', 'tablecolumn', 'tablerow', 'mergetablecells', '|',
+                                'undo', 'redo'
+                            ]
+                        })
+                        .then(editor = > {
+                        console.log(editor);
+                })
+                .
+                    catch(error = > {
+                        console.error(error);
+                })
+                    ;
+                });
+            </script>
+            <?php
+            $return = '<textarea name="fields[' . $field['field'] . ']" class="rich" id="rich_' . $field['field'] . '" style="min-height: 400px">' . $value . '</textarea>';
             return $return;
         }
     }
