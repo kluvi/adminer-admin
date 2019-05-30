@@ -45,11 +45,11 @@ class FieldRichEditor extends AbstractAdminPlugin
         }
 
         if ($settings->type == 'ckeditor' || $this->getFromType($settings, $table) == 'ckeditor') {
-            if (!$this->scriptsPrinted) {
+            if (!$this->scriptsPrintedCkeditor) {
                 echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>';
                 echo '<script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/classic/ckeditor.js"></script>';
                 echo '<script src="' . asset('ckfinder/ckfinder.js') . '"></script>';
-                $this->scriptsPrinted = true;
+                $this->scriptsPrintedCkeditor = true;
             }
             ?>
 
@@ -59,7 +59,7 @@ class FieldRichEditor extends AbstractAdminPlugin
                     ClassicEditor
                         .create(document.querySelector('#rich_<?php echo $field['field']; ?>'), {
                             ckfinder: {
-                                uploadUrl: 'ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
+                                uploadUrl: '<?php echo asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json'); ?>',
                             },
                             toolbar: [
                                 'heading', '|',
@@ -70,14 +70,12 @@ class FieldRichEditor extends AbstractAdminPlugin
                                 'undo', 'redo'
                             ]
                         })
-                        .then(editor = > {
-                        console.log(editor);
-                })
-                .
-                    catch(error = > {
-                        console.error(error);
-                })
-                    ;
+                        .then(editor => {
+                            console.log(editor);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
                 });
             </script>
             <?php
