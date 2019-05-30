@@ -7,15 +7,19 @@ class FieldRichEditor extends AbstractAdminPlugin
 {
     protected $scriptsPrinted = false;
     protected $scriptsPrintedCkeditor = false;
+    protected $jqueryPrinted = false;
 
     function editInput($table, $field, $attrs, $value)
     {
         $settings = $this->parseComment($field['comment']);
 
         if ($settings->type == 'rich' || $this->getFromType($settings, $table) == 'rich') {
+            if(!$this->jqueryPrinted) {
+                echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>';
+                $this->jqueryPrinted = true;
+            }
             if (!$this->scriptsPrinted) {
                 ?>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.11.1/trumbowyg.min.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.11.1/langs/cs.min.js"></script>
                 <!--                <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.11.1/plugins/base64/trumbowyg.base64.min.js"></script>-->
@@ -45,8 +49,11 @@ class FieldRichEditor extends AbstractAdminPlugin
         }
 
         if ($settings->type == 'ckeditor' || $this->getFromType($settings, $table) == 'ckeditor') {
-            if (!$this->scriptsPrintedCkeditor) {
+            if(!$this->jqueryPrinted) {
                 echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>';
+                $this->jqueryPrinted = true;
+            }
+            if (!$this->scriptsPrintedCkeditor) {
                 echo '<script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/classic/ckeditor.js"></script>';
                 echo '<script src="' . asset('ckfinder/ckfinder.js') . '"></script>';
                 $this->scriptsPrintedCkeditor = true;
@@ -71,7 +78,7 @@ class FieldRichEditor extends AbstractAdminPlugin
                             ]
                         })
                         .then(editor => {
-                            console.log(editor);
+                            // console.log(editor);
                         })
                         .catch(error => {
                             console.error(error);
