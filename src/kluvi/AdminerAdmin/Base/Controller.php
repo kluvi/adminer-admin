@@ -1,7 +1,9 @@
 <?php
 namespace kluvi\AdminerAdmin\Base;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Controller extends BaseController
 {
@@ -18,5 +20,24 @@ class Controller extends BaseController
         $dbPassword = config('database.connections.mysql.password');
 
         AdminerFactory::run($adminerPath, $dbName, $dbHost, $dbUser, $dbPassword, $pluginsConfig);
+    }
+
+    public function upload(Request $request)
+    {
+        $files = $request->files->all();
+        foreach($files as $key => $file) {
+            if($file instanceof UploadedFile) {
+                $fileName = uniqid().'-'.$file->getClientOriginalName();
+                $file->move(public_path('files'), $fileName);
+                return response()->json([
+                    'success' => true,
+                    'file' => asset('files/'.$fileName),
+                ]);
+            }
+        }
+
+        return response()->json([
+            'success' => false,
+        ]);
     }
 }

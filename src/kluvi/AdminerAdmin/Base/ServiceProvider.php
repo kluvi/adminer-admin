@@ -45,7 +45,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         $route = config('adminer-admin.route');
         if (strlen($route) > 0) {
-            Route::any($route, Controller::class . '@index');
+            Route::any($route, [Controller::class,'index'])->name('adminer-admin');
+            Route::any($route.'/upload-file', [Controller::class,'upload'])->name('adminer-admin-upload-file');
         }
     }
 }

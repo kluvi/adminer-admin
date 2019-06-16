@@ -3,6 +3,8 @@
 namespace kluvi\AdminerAdmin\Plugins;
 
 
+use Illuminate\Support\Facades\Route;
+
 class FieldRichEditor extends AbstractAdminPlugin
 {
     protected $scriptsPrinted = false;
@@ -19,16 +21,25 @@ class FieldRichEditor extends AbstractAdminPlugin
                 $this->jqueryPrinted = true;
             }
             if (!$this->scriptsPrinted) {
+                $canUpload = Route::has('adminer-admin-upload-file');
                 ?>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.11.1/trumbowyg.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.11.1/langs/cs.min.js"></script>
-                <!--                <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.11.1/plugins/base64/trumbowyg.base64.min.js"></script>-->
-                <!--                <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.11.1/plugins/cleanpaste/trumbowyg.cleanpaste.min.js"></script>-->
-                <!--                <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.11.1/plugins/history/trumbowyg.history.min.js"></script>-->
-                <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.11.1/ui/trumbowyg.min.css"/>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/trumbowyg.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/langs/cs.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/plugins/cleanpaste/trumbowyg.cleanpaste.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/plugins/colors/trumbowyg.colors.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/plugins/emoji/trumbowyg.emoji.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/plugins/fontfamily/trumbowyg.fontfamily.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/plugins/fontsize/trumbowyg.fontsize.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/plugins/table/trumbowyg.table.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/plugins/template/trumbowyg.template.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/plugins/upload/trumbowyg.upload.min.js"></script>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/ui/trumbowyg.min.css"/>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/plugins/colors/ui/trumbowyg.colors.min.css"/>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/plugins/emoji/ui/trumbowyg.emoji.min.css" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/plugins/table/ui/trumbowyg.table.min.css" />
 
                 <div id="trumbowyg-icons">
-                    <?php echo file_get_contents('https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.11.1/ui/icons.svg'); ?>
+                    <?php echo file_get_contents('https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/ui/icons.svg'); ?>
                 </div>
                 <script type="text/javascript">
                     $(document).ready(function () {
@@ -37,7 +48,57 @@ class FieldRichEditor extends AbstractAdminPlugin
                             removeformatPasted: true,
                             // autogrow: true,
                             // autogrowOnEnter: true,
-                            lang: 'cs'
+                            lang: 'cs',
+                            changeActiveDropdownIcon: true,
+                            hideButtonTexts: true,
+                            resetCss: true,
+                            removeformatPasted: false,
+                            tagsToRemove: ['script', 'link'],
+                            imageWidthModalEdit: true,
+                            minimalLinks: true,
+                            btns: [
+                                ['viewHTML'],
+                                ['template'],
+                                ['undo', 'redo'], // Only supported in Blink browsers
+                                ['formatting'],
+                                // ['fontfamily'],
+                                // ['fontsize'],
+                                ['strong', 'em', 'del'],
+                                ['superscript', 'subscript'],
+                                // ['foreColor', 'backColor'],
+                                ['link'],
+                                ['insertImage'<?php echo ($canUpload ? ", 'upload'" : "") ?>],
+                                ['table'],
+                                ['emoji'],
+                                ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                                ['unorderedList', 'orderedList'],
+                                ['horizontalRule'],
+                                ['removeformat'],
+                                ['fullscreen']
+                            ],
+                            plugins: {
+                                table: {
+                                    rows: 8,
+                                    columns: 8,
+                                    styler: 'table'
+                                },
+                                templates: [
+                                    {
+                                        name: 'Template 1',
+                                        html: '<p>I am a template!</p>'
+                                    },
+                                    {
+                                        name: 'Template 2',
+                                        html: '<p>I am a different template!</p>'
+                                    }
+                                ],
+                                <?php if($canUpload): ?>
+                                upload: {
+                                    serverPath: '<?php echo route('adminer-admin-upload-file') ?>', // The URL to the server which catch the upload request
+                                    fileFieldName: 'fileToUpload', // The POST property key associated to the upload file
+                                }
+                                <?php endif; ?>
+                            }
                         });
                     });
                 </script>
