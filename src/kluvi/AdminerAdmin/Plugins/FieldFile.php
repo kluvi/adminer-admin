@@ -74,8 +74,6 @@ class FieldFile extends AbstractAdminPlugin
             }
             return q($dir . '/' . $filename);
         }
-
-        return q($value);
     }
 
     function editInput($table, $field, $attrs, $value)

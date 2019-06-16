@@ -29,7 +29,7 @@ class AdminerFactory
             // fieds must be registered first, because TranslateFields overrides fieldName() and field then cant disable self
             FieldDate::class,
             FieldMultiInput::class,
-            FieldRichEditor::class,
+            [FieldRichEditor::class, self::$config['plugins']['field_rich_editor']],
             FieldPassword::class,
             [FieldFile::class, self::$config['plugins']['field_image']],
             FieldReadonly::class,

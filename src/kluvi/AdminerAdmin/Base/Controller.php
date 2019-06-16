@@ -28,10 +28,10 @@ class Controller extends BaseController
         foreach($files as $key => $file) {
             if($file instanceof UploadedFile) {
                 $fileName = uniqid().'-'.$file->getClientOriginalName();
-                $file->move(public_path('files'), $fileName);
+                $file->move(config('adminer-admin.plugins_config.baseDir'), $fileName);
                 return response()->json([
                     'success' => true,
-                    'file' => asset('files/'.$fileName),
+                    'file' => asset(config('adminer-admin.plugins_config.dir').'/'.$fileName),
                 ]);
             }
         }

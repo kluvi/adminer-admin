@@ -105,6 +105,7 @@ class FieldRichEditor extends AbstractAdminPlugin
                 <?php
                 $this->scriptsPrinted = true;
             }
+            $value = str_replace('@@rich_editor_base_url@@', $this->config['baseUrl'], $value);
             $return = '<textarea name="fields[' . $field['field'] . ']" class="rich">' . $value . '</textarea>';
             return $return;
         }
@@ -147,8 +148,19 @@ class FieldRichEditor extends AbstractAdminPlugin
                 });
             </script>
             <?php
+            $value = str_replace('@@rich_editor_base_url@@', $this->config['baseUrl'], $value);
             $return = '<textarea name="fields[' . $field['field'] . ']" class="rich-ckeditor" id="rich_' . $field['field'] . '" style="min-height: 400px">' . $value . '</textarea>';
             return $return;
+        }
+    }
+
+    function processInput($field, $value, $function = "")
+    {
+        $settings = $this->parseComment($field['comment']);
+        if ($settings->type == 'rich' || $this->getFromType($settings, $_GET['edit']) == 'rich') {
+            $value = preg_replace('|/assets-([a-z0-9]+/)|i', '/', $value);
+            $value = str_replace($this->config['baseUrl'], '@@rich_editor_base_url@@', $value);
+            return q($value);
         }
     }
 }

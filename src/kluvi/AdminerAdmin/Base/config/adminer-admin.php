@@ -24,5 +24,10 @@ return [
             'baseDir' => public_path('images'),
             'baseUrl' => asset('images'),
         ],
+        'field_rich_editor' => [
+            'baseDir' => public_path('files'),
+            'baseUrl' => asset('files'),
+            'dir' => 'files',
+        ],
     ],
 ];
