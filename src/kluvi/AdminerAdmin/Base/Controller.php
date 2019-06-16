@@ -24,14 +24,15 @@ class Controller extends BaseController
 
     public function upload(Request $request)
     {
+        $baseDir = config('adminer-admin.plugins_config.baseDir', public_path('files'));
         $files = $request->files->all();
         foreach($files as $key => $file) {
             if($file instanceof UploadedFile) {
                 $fileName = uniqid().'-'.$file->getClientOriginalName();
-                $file->move(config('adminer-admin.plugins_config.baseDir'), $fileName);
+                $file->move($baseDir, $fileName);
                 return response()->json([
                     'success' => true,
-                    'file' => asset(config('adminer-admin.plugins_config.dir').'/'.$fileName),
+                    'file' => asset(config('adminer-admin.plugins_config.dir', 'files').'/'.$fileName),
                 ]);
             }
         }
