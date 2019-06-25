@@ -58,7 +58,7 @@ class FieldRichEditor extends AbstractAdminPlugin
                             minimalLinks: true,
                             btns: [
                                 ['viewHTML'],
-                                ['template'],
+                                // ['template'],
                                 ['undo', 'redo'], // Only supported in Blink browsers
                                 ['formatting'],
                                 // ['fontfamily'],
