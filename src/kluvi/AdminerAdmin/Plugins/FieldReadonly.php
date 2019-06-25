@@ -9,7 +9,7 @@ class FieldReadonly extends AbstractAdminPlugin
     {
         $settings = $this->parseComment($field['comment']);
         if ($settings->type == 'readonly') {
-            return $value;
+            return q($value);
         }
     }
 
